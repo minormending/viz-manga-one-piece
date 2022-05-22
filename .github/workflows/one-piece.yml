@@ -18,9 +18,17 @@ jobs:
             fetch
             one-piece
             --directory=.
-        
-      - run: git status
-      - run: git add .
-      - run: git commit -m "Auto fetching latest One Piece chapters."
+      
+      - name: Setup GitHub user
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+      
+      - name: Commit the chapters
+        run: |
+          git status
+          git add .
+          git commit -m "Auto fetching latest One Piece chapters."
+          
       - run: git push origin HEAD:master 
         

@@ -30,5 +30,5 @@ jobs:
           git add .
           git commit -m "Auto fetching latest One Piece chapters."
           
-      - run: git push origin HEAD:master 
+      - run: git push origin HEAD:main
         

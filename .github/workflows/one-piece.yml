@@ -9,11 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repository
       - uses: actions/checkout@v3
 
       - name: Run a one-line script
         uses: docker://minormending/viz-manga:latest
         with:
-          args: series
+          args: 
+            fetch
+            24297
+            --directory=.
+        
+      - name: Check status
+        run: git status
+      - name: Add files
+        run: git add .
         

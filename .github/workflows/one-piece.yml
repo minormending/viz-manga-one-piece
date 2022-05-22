@@ -27,11 +27,19 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
       
-      - name: Commit the chapters
+      - name: Commit the changes if there are any new chapters
+        id: commit
         run: |
-          git status
           git add .
-          git commit -m "Auto fetching latest One Piece chapters."
+          if [-z "$(git status --porcelain)"]; then
+             echo "::set-output name=push::false"
+          else
+             git commit -m "Auto fetching latest One Piece chapters."
+             echo "::set-output name=push::true"
+          fi
+        shell: bash
           
-      - run: git push origin HEAD:main
+      - name: Push if there are any changes
+        if: steps.commit.outputs.push == 'true'
+        run: git push origin HEAD:main
         
